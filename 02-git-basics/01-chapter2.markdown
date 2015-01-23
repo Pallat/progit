@@ -21,6 +21,23 @@
 
 เราจะได้เห็นว่าคำสั่งเหล่านี้ใช้เวลานิดเดียว ซึ่งตรงนี้คุณก็จะได้ Git เรโป พร้อมการติดตามไฟล์เหล่านั้นและคอมมิตแรกด้วย
 
+### การโคลนเรโปที่มีอยู่แล้ว ###
+
+ถ้าคุณต้องการทำสำเนา Git เรโปที่มีอยู่แล้ว ตัวอย่างเช่น มีโปรเจ็คหนึ่งที่คุณสนใจอยากมีส่วนร่วม คุณต้องใช้คำสั่ง git clone  ถ้าคุณคุ้นเคยกับระบบ VCS อื่นๆยกตัวอย่างเช่น Subversion ขอให้รู้ไว้ว่า คำสั่ง clone ไม่ใช่ checkout   ซึ่งนี่คือความต่างที่สำคัญมาก เพราะว่า Git จะรับเอาสำเนาเกือบทั้งหมดของข้อมูลทุกชิ้นที่เซิฟเวอร์มี รวมถึงทุกๆเวอร์ชั่นของทุกๆไฟล์ที่มีในประวัติของโปรเจ็คลงมา เมื่อคุณใช้คำสั่ง `git clone`
+นั่นแปลว่า ถ้าเกิดอะไรขึ้นกับดิสบนเซิฟเวอร์ คุณสามารถใช้สำเนาแบบนี้จากใครก็ได้ กลับมาคืนให้เซิฟเวอร์ ซึ่งจะได้สถานะเดียวกับเมื่อตอนที่มันถูกโคลนไป (คุณอาจจะสูญเสียบางอย่างที่ฝั่งเซิฟเวอร์มีเกินจากนั้นไปบ้าง แต่ทุกๆเวอร์ชั่นจะยังคงอยู่ - ดูบทที่ 4 สำหรับรายละเอียดเพิ่มเติม)
+
+คุณโคลนเรโปได้ด้วยคำสั่ง `git clone [url]` ตัวอย่างเช่น ถ้าคุณต้องการโคลน Ruby Git library ที่เรียกว่า Grit คุณสามารถทำแบบนี้ได้
+
+	$ git clone git://github.com/schacon/grit.git
+	
+เสร็จแล้วจะเกิดไดเร็คทอรี่ชื่อ "grit" มีการสร้างไดเร็คทอรี่ `.git` อยู่ในนั้น ดึงข้อมูลทั้งหมดของเรโปลงมา และได้สำเนางานเวอร์ชั่นล่าสุดเรียบร้อย ถ้าคุณลองเข้าไปในไดเรคทอรี่ `grit` ที่ถูกสร้างขึ้นมาใหม่นี้ คุณก็จะเห็นไฟล์ของโปรเจ็คในนั้น พร้อมให้ทำงาน หรือใช้ได้เลย ถ้าคุณต้องการโคลนเรโป เข้าไปไว้ในไดเร็คทอรี่ชื่ออื่นนอกเหนือจาก grit คุณสามารถระบุเจาะจงลงไปได้เลยดตามคำสั่งต่อไปนี้
+
+	$ git clone git://github.com/schacon/grit.git mygrit
+	
+ซึ่งคำสั่งนี้จะทำเหมือนคำสั่งก่อนหน้านี้เพียงแต่จะนำทั้งหมดไปอยู่ในไดเรคทอรี่ชื่อ mygrit แทน
+
+Git มีหลายโปรโตคอลสำหรับถ่ายโอนไฟล์ให้เลือกใช้ โดยตัวอย่างก่อนหน้านี้ได้ใช้ โปรโตคอล `git://` แต่คุณอาจจะได้เห็นแบบอื่นด้วยเช่น `http(s)://` หรือ `user@server:/path.git` ซึ่งใช้โปรโตคอล SSH โดยในบทที่ 4 จะแนะนำตัวเลือกทั้งหมดที่เป็นไปได้ที่เซิฟเวอร์จะตั้งค่าให้เข้าถึง Git เรโปได้ รวมถึงข้อดีข้อเสียของแต่ละตัวเลือก
+
 # Git Basics #
 
 If you can read only one chapter to get going with Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you’ll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We’ll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
