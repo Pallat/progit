@@ -38,6 +38,52 @@
 
 Git มีหลายโปรโตคอลสำหรับถ่ายโอนไฟล์ให้เลือกใช้ โดยตัวอย่างก่อนหน้านี้ได้ใช้ โปรโตคอล `git://` แต่คุณอาจจะได้เห็นแบบอื่นด้วยเช่น `http(s)://` หรือ `user@server:/path.git` ซึ่งใช้โปรโตคอล SSH โดยในบทที่ 4 จะแนะนำตัวเลือกทั้งหมดที่เป็นไปได้ที่เซิฟเวอร์จะตั้งค่าให้เข้าถึง Git เรโปได้ รวมถึงข้อดีข้อเสียของแต่ละตัวเลือก
 
+## การบันทึกการเปลี่ยนแปลงในเรโป ##
+คุณมีสักหนึ่งเรโปใสๆและเช็คเอ้าท์หรือทำสำเนาไฟล์งานของโปรเจ็คนั้นไว้ ทีนี้คุณต้องการแก้ไขออะไรสักอย่างและ อยากเก็บภาพรวมของการเปลี่ยนแปลงนั้นเอาไว้ในเรโป ทุกๆจุดที่ต้องการ
+โปรดจำไว้ว่าแต่ละไฟล์ในไดเร็คทอรี่ที่คุณกำลังทำงานอยู่นั้น สามารถมีได้ หนึ่ง หรือ สอง สภาวะ คือ ถูกติดตาม(tracked) หรือ ไม่ถูกติดตาม(untracked) 
+ไฟล์ที่ถูกติดตามนั้นจะอยู่ในภาพรวมสุดท้าย ซึ่งพวกมันสามารถเป็นได้ทั้ง ไม่ถูกติดตาม, ถูกติดตาม หรือ กำลังติดตาม(staged)
+ไฟล์ที่ไม่ถูกติดตามคือไฟล์อื่นๆ ไฟล์ไหนก็ตามในไดเร็คทอรี่ที่ไม่อยู่ในภาพรวมสุดท้าย และไม่อยู่ในพื้นที่ที่กำลังติดตาม
+เมื่อตอนที่คุณโคลนเรโปมาครั้งแรก ไฟล์ทั้งหมดจะมีสถานะเป็น ถูกติดตาม และไม่ถูกแก้ไข เพราะคุณเพิ่งจะเอามันออกมาและยังไม่ได้แก้ไขอะไร
+
+เมื่อคุณแก้ไขไฟล์ git จะมองพวกมันเป็น พวกที่ถูกแก้ไข เพราะคุณได้เปลี่ยนแปลงพวกมันไปจากการบันทึกการติดตามทั้งสุดท้าย คุณจะอยู่ในระหว่างการแก้ไขไฟล์พวกนั้น จากนั้นเมื่อคุณบันทึกการติดตามไฟล์ทั้งหมด ก็จะครบวงจร และเกิดแบบนี้ซ้ำไปซ้ำมา ซึ่งแสดงเป็นภาพวงจรชีวิตแบบนี้ในภาพ 2-1
+
+ภาพ 2-1 วงจรชีวิตสถานะของไฟล์
+
+### การตรวจสอบสถานะของไฟล์ ###
+เครื่องมือหลักๆสำหรับหาว่าไฟล์ไหนอยู่ในสถานะไหนก็คือคำสั่ง git status ถ้าคุณรันคำสั่งนี้ตรงๆหลังจากที่เพิ่งโคลนมา คุณจะเห็นบางอย่างคล้ายๆแบบนี้
+	$ git status
+	# On branch master
+	nothing to commit (working directory clean)
+
+นี่หมายความว่าคุณมีไดเร็คทอรี่ของการทำงานที่สะอาดสุดๆ หรืออีกนัยหนึ่งคือ ไม่มีไฟล์ไหนถูกติดตามหรือถูกแก้ไขเลย ในขณะเดียวกัน git ก็ยังไม่เห็นว่ามีไฟล์ไหนที่ ไม่ถูกติดตาม หรือว่ามันควรสอดส่องในนี้ สุดท้าย คำสั่งที่จะบอกคุณว่าคุณกำลังอยู่ที่สาขา(branch)ไหน ซึ่งตอนนี้เรามีแต่ master ซึ่งเป็นค่าเริ่มต้นอยู่แล้ว คุณไม่ต้องห่วงในเรื่องนี้ ในบทถัดไปเราจะแสดงการท่องไปในสาขาต่างๆและเล่ารายละเอียดให้ฟัง
+
+สมมุติว่า คุณเพิ่มไฟล์ใหม่เข้ามาในโปรเจ็ค เอาง่ายๆเช่นไฟล์ README ถ้าไฟล์นี้ไม่เคยมีอยู่เดิม และคุณรันคำสั่ง `git status` คุณจะเห็นไฟล์ที่ไม่ถูกติดตามแบบนี้
+
+	$ vim README
+	$ git status
+	# On branch master
+	# Untracked files:
+	#   (use "git add <file>..." to include in what will be committed)
+	#
+	#	README
+	nothing added to commit but untracked files present (use "git add" to track)
+
+คุณจะเห็นว่าไฟล์ README ของคุณอยู่ในสถานะ ไม่ถูกติดตาม เพราะว่ามันยังอยู่ภายใต้คำว่า “Untracked files”  ที่แสดงให้เห็นบนหน้าจอ ไม่ถูกติดตาม โดยปกตินั้นหมายความว่า git ไม่เห็นไฟล์นี้ใน ภาพรวมสุดท้ายก่อนหน้านี้ (commit) git จะไม่เริ่มต้นรวมไฟล์นี้ลงไปใน ภาพรวมสุดท้าย จนกว่าคุณจะบอกมันอย่างชัดเจนก่อน ซึ่งมันทำแบบนี้เพื่อป้องกันอันตรายหากคุณไม่ได้ตั้งใจจะรวมเอาไฟล์ไบนารี่หรือไฟล์อะไรก็ไม่รู้เข้าไปด้วย สิ่งที่คุณต้องทำเมื่ออยากรวมไฟล์ README เข้าไปเพื่อการติดตาม
+คำสั่งที่จะเริ่มต้นการติดตามไฟล์ใหม่ ให้คุณใช้คำสั่ง `git add` เพื่อเริ่มติดตามไฟล์ README ด้วยการรันคำสั่งนี้
+	$ git add README
+
+ถ้าคุณรันคำสั่ง status อีกที คุณจะเห็นว่าไฟล์ README ของคุณมีสถานะเป็น ถูกติดตาม และ กำลังถูกติดตาม แล้ว
+	$ git status
+	# On branch master
+	# Changes to be committed:
+	#   (use "git reset HEAD <file>..." to unstage)
+	#
+	#	new file:   README
+	#
+
+คุณรู้ได้ว่าสถานะของมันเป็น กำลังถูกติดตาม ก็เพราะมันอยู่ใต้คำว่า “Changes to be committed” บนหัวมัน ถ้าคุณบันทึกการติดตาม(commit) ที่จุดนี้เลย เวอร์ชั่นของไฟล์ ณ จุดที่คุณได้รันคำสั่ง git add จะกลายเป็นประวัติไปอยู่ในภาพรวม  คุณอาจจะย้อนสถานะมันได้ ตั้งแต่ เมื่อตอนที่คุณได้รันคำสั่ง git init เมื่อเร็วๆนี้ จากนั้นคุณรันคำสั่ง git add (file) นั่นเป็นการเริ่มการติดตามไฟล์ในไดเร็คทอรี่ของคุณแล้ว คำสั่ง git add จะเก็บเอาชื่อพาร์ท รวมถึงไฟล์และไดเร็คทอรี่ไว้ ถุ้าสิ่งที่เพิ่มไว้เป็นไดเร็คทอรี่ คำสั่งจะเพิ่มไฟล์ทั้งหมดในไดเร็คทอรี่ให้เลย
+
+
 # Git Basics #
 
 If you can read only one chapter to get going with Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you’ll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We’ll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
@@ -77,6 +123,7 @@ That creates a directory named "grit", initializes a `.git` directory inside it,
 That command does the same thing as the previous one, but the target directory is called mygrit.
 
 Git has a number of different transfer protocols you can use. The previous example uses the `git://` protocol, but you may also see `http(s)://` or `user@server:/path.git`, which uses the SSH transfer protocol. Chapter 4 will introduce all of the available options the server can set up to access your Git repository and the pros and cons of each.
+
 
 ## Recording Changes to the Repository ##
 
