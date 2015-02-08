@@ -205,11 +205,16 @@ untracked โดยปกตินั้นหมายความว่า git
 	build/    # ignore all files in the build/ directory
 	doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
 
-### Viewing Your Staged and Unstaged Changes ###
 
-If the `git status` command is too vague for you — you want to know exactly what you changed, not just which files were changed — you can use the `git diff` command. We’ll cover `git diff` in more detail later; but you’ll probably use it most often to answer these two questions: What have you changed but not yet staged? And what have you staged that you are about to commit? Although `git status` answers those questions very generally, `git diff` shows you the exact lines added and removed — the patch, as it were.
+### การดูของที่ จบขั้นตอนแล้ว และ ยังไม่เข้าขั้นตอน การแก้ไข ###
 
-Let’s say you edit and stage the README file again and then edit the benchmarks.rb file without staging it. If you run your `status` command, you once again see something like this:
+ถ้าคำสั่ง `git status` มันดูไม่ค่อยเข้าใจสำหรับคุณ คุณต้องรู้ให้ได้จริงๆว่าคุณแก้ไขอะไรลงไป ไม่ใช่แค่รู้ว่าไฟล์ไหนถูกแก้ไขเท่านั้น
+คุณลองใช้คำสั่ง `git diff` ซึ่งเดี๋ยวเราจะไปดูกันในรายละเอียดภายหลัง แต่คุณจะต้องใช้มันบ่อยมากๆเพื่อตอบสองคำถามนี้
+อะไรที่คุณแก้ไขไปแล้วยังไม่เข้า stage และ อะไรที่คุณจบ stage แล้วนั้นมันเกี่ยวกับ commit หรือเปล่า
+แม้ว่า `git status` จะตอบคำถามพวกนี้ได้แบบกว้างๆ แค่คำสั่ง  `git diff` จะแสดงให้คุณเห็นจริงๆว่าบรรทัดไหนถูกเพิ่ม บรรทัดไหนถูกลบ การแก้ไขทั้งหมดอย่างที่มันเป็นจริงๆ
+
+ยกตัวอย่างเช่น คุณแก้ไข และเข้า stage ให้ไฟล์ README อีกครั้ง จากนั้นคุณก็ไปแก้ไขไฟล์ benchmarks.rb โดยไม่เอาเข้า stage
+ถ้าคุณรันคำสั่ง `status` คุณจะเห็นอะไรแบบนี้อีกครั้งหนึ่ง
 
 	$ git status
 	# On branch master
@@ -224,7 +229,7 @@ Let’s say you edit and stage the README file again and then edit the benchmark
 	#	modified:   benchmarks.rb
 	#
 
-To see what you’ve changed but not yet staged, type `git diff` with no other arguments:
+เพื่อจะให้เห็นว่าคุณแก้ไขอะไรไปแล้วยังไม่เอาเข้า stage ลองพิมพ์ `git diff` โดยไม่ต้องใส่อาร์กิวเม้นท์
 
 	$ git diff
 	diff --git a/benchmarks.rb b/benchmarks.rb
@@ -243,9 +248,12 @@ To see what you’ve changed but not yet staged, type `git diff` with no other a
 	           log = git.commits('master', 15)
 	           log.size
 
-That command compares what is in your working directory with what is in your staging area. The result tells you the changes you’ve made that you haven’t yet staged.
 
-If you want to see what you’ve staged that will go into your next commit, you can use `git diff --cached`. (In Git versions 1.6.1 and later, you can also use `git diff --staged`, which may be easier to remember.) This command compares your staged changes to your last commit:
+คำสั่งนั้นจะเปรียบเทียบว่าอะไรในไดเร็คทอรี่งานของคุณต่างกับสิ่งที่คุณเอาเข้า stage แล้ว
+ผลลัพธ์นี้จะบอกคุณว่าคุณแก้ไขอะไรไปแล้วยังไม่เข้า stage
+
+ถ้าคุณอยากจะเห็นว่าอะไรที่จบ stage ไปแล้ว และกำลังจะไปสู่ commit ต่อไป คุณสามารถใช้คำสั่ง `git diff --cached`
+(ใน git เวอร์ชั่น 1.6.1 และหลังจากนั้น คุณสามารถใช้คำสั่ง `git diff --staged` ได้ด้วย ซึ่งง่ายที่จะจำมากกว่า) คำสั่งนี้จะเปรียบเทียบของที่จบ stage ไปแล้วกับ commit สุดท้ายให้
 
 	$ git diff --cached
 	diff --git a/README b/README
@@ -260,9 +268,10 @@ If you want to see what you’ve staged that will go into your next commit, you 
 	+
 	+Grit is a Ruby library for extracting information from a Git repository
 
-It’s important to note that `git diff` by itself doesn’t show all changes made since your last commit — only changes that are still unstaged. This can be confusing, because if you’ve staged all of your changes, `git diff` will give you no output.
+ข้อสำคัญที่ควรจำคือ `git diff` นั้นไม่ได้แสดงการแก้ไขทั้งหมดที่เกิดหลังการ commit ครั้งล่าสุด แต่จะแสดงเฉพาะการแก้ไขที่ยังไม่เข้า stage
+สิ่งนี้อาจจะทำให้สับสน เพราะถ้าคุณได้จบ stage ของการแก้ไขทั้งหมดแล้ว `git diff`จะไม่ให้ผลลัพธ์อะไรกับคุณเลย
 
-For another example, if you stage the benchmarks.rb file and then edit it, you can use `git diff` to see the changes in the file that are staged and the changes that are unstaged:
+สำหรับตัวอย่างอื่นๆ ถ้าคุณสนใจไฟล์  benchmarks.r และแก้ไขมัน คุณสามารถใช้  `git diff` เพื่อดูการแก้ไขในไฟล์ที่จบ stage แล้วที่ทำให้มันกลายเป็น ยังไม่เข้า stage
 
 	$ git add benchmarks.rb
 	$ echo '# test line' >> benchmarks.rb
@@ -278,7 +287,7 @@ For another example, if you stage the benchmarks.rb file and then edit it, you c
 	#	modified:   benchmarks.rb
 	#
 
-Now you can use `git diff` to see what is still unstaged
+ตอนนี้คุณสามารถใช้  `git diff` เพื่อดูว่าอะไรที่ยังคงไม่เข้า stage ได้
 
 	$ git diff
 	diff --git a/benchmarks.rb b/benchmarks.rb
@@ -291,7 +300,7 @@ Now you can use `git diff` to see what is still unstaged
 	 ##pp Grit::GitRuby.cache_client.stats
 	+# test line
 
-and `git diff --cached` to see what you’ve staged so far:
+และคำสั่ง `git diff --cached` เพื่อดูว่าอะไรเปลี่ยนไปจนกระทั่งจบ stage
 
 	$ git diff --cached
 	diff --git a/benchmarks.rb b/benchmarks.rb
