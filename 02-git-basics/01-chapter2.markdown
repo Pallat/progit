@@ -93,7 +93,7 @@ untracked โดยปกตินั้นหมายความว่า git
 
 	$ git add README
 
-ถ้าคุณรันคำสั่ง status อีกที คุณจะเห็นว่าไฟล์ README ของคุณมีสถานะเป็น  tracked และ จบขั้นตอนแล้ว
+ถ้าคุณรันคำสั่ง status อีกที คุณจะเห็นว่าไฟล์ README ของคุณมีสถานะเป็น  tracked และ เข้า stage แล้ว
 	$ git status
 	# On branch master
 	# Changes to be committed:
@@ -102,7 +102,7 @@ untracked โดยปกตินั้นหมายความว่า git
 	#	new file:   README
 	#
 
-คุณบอกได้ว่าสถานะของมันเป็น จบขั้นตอนแล้ว ก็เพราะมันอยู่ใต้คำว่า “Changes to be committed” บนหัวมัน ถ้าคุณ commit ที่จุดนี้เลย เวอร์ชั่นของไฟล์ ณ จุดที่คุณได้รันคำสั่ง git add จะกลายเป็นประวัติไปอยู่ในภาพรวม  คุณอาจจะย้อนสถานะมันได้ ตั้งแต่ เมื่อตอนที่คุณได้รันคำสั่ง git init เมื่อเร็วๆนี้ และจากนั้นคุณได้รันคำสั่ง git add (file) ซึ่งตอนนั้นเป็นการเริ่มการติดตามไฟล์ในไดเร็คทอรี่ของคุณแล้ว คำสั่ง git add จะเก็บเอาชื่อพาร์ท รวมถึงไฟล์และไดเร็คทอรี่ไว้ ถุ้าสิ่งที่เพิ่มไว้เป็นไดเร็คทอรี่ คำสั่งจะเพิ่มไฟล์ทั้งหมดในไดเร็คทอรี่ให้เลย
+คุณบอกได้ว่าสถานะของมันเป็น เข้า stage แล้ว ก็เพราะมันอยู่ใต้คำว่า “Changes to be committed” บนหัวมัน ถ้าคุณ commit ที่จุดนี้เลย เวอร์ชั่นของไฟล์ ณ จุดที่คุณได้รันคำสั่ง git add จะกลายเป็นประวัติไปอยู่ในภาพรวม  คุณอาจจะย้อนสถานะมันได้ ตั้งแต่ เมื่อตอนที่คุณได้รันคำสั่ง git init เมื่อเร็วๆนี้ และจากนั้นคุณได้รันคำสั่ง git add (file) ซึ่งตอนนั้นเป็นการเริ่มการติดตามไฟล์ในไดเร็คทอรี่ของคุณแล้ว คำสั่ง git add จะเก็บเอาชื่อพาร์ท รวมถึงไฟล์และไดเร็คทอรี่ไว้ ถุ้าสิ่งที่เพิ่มไว้เป็นไดเร็คทอรี่ คำสั่งจะเพิ่มไฟล์ทั้งหมดในไดเร็คทอรี่ให้เลย
 
 
 ###  การอยู่ในระยะที่ไฟล์ถูกแก้ไข ###
@@ -124,7 +124,7 @@ untracked โดยปกตินั้นหมายความว่า git
 
 
 ไฟล์ benchmarks.rb จะโผล่มาอยู่ภายใต้ส่วนของคำว่า “Changed but not updated” ซึ่งหมายความว่าไฟล์นั้น
-สถานะเป็น tracked และกำลังถูกแก้ไขในไดเร็คทอรี่แต่ยังไม่จบขั้นตอน และเพื่อทำให้เป็นสถานะนั้น คุณลองรันคำสั่ง `git add` ดู (มันเป็นคำสั่งสารพัดประโยชน์ คุณสามารถใช้มันเพื่อ เริ่ม track ไฟล์ใหม่ หรือเพื่อ เริ่มขั้นตอนใหม่กับไฟล์ เพื่อที่จะทำสิ่งอื่นๆต่อ เช่น  ได้แก้ไข ไฟล์ที่เกิดปัญหาในการรวมกันแล้วเรียบร้อย {}merge-conflicted)  เอาละ มาลองรัน `git add` เลย เพื่อเปลี่ยนสถานะของไฟล์ benchmarks.rb  จากนั้นรันคำสั่ง `git status` อีกครั้ง
+สถานะเป็น tracked และกำลังถูกแก้ไขในไดเร็คทอรี่แต่ยังไม่เข้า stage และเพื่อทำให้เป็นสถานะนั้น คุณลองรันคำสั่ง `git add` ดู (มันเป็นคำสั่งสารพัดประโยชน์ คุณสามารถใช้มันเพื่อ เริ่ม track ไฟล์ใหม่ หรือเพื่อ เริ่ม stage ใหม่กับไฟล์ เพื่อที่จะทำสิ่งอื่นๆต่อ เช่น  ได้แก้ไข ไฟล์ที่เกิดปัญหาในการรวมกันแล้วเรียบร้อย {}merge-conflicted)  เอาละ มาลองรัน `git add` เลย เพื่อเปลี่ยนสถานะของไฟล์ benchmarks.rb  จากนั้นรันคำสั่ง `git status` อีกครั้ง
 
 	$ git add benchmarks.rb
 	$ git status
@@ -136,7 +136,7 @@ untracked โดยปกตินั้นหมายความว่า git
 	#	modified:   benchmarks.rb
 	#
 
-ทั้งสองไฟล์ได้จบขั้นตอนแล้ว และกำลังก้าวเข้าสู่ commit ถัดไป ณ จุดนี้ สมมุติว่าคุณเพิ่งนึกขึ้นได้ว่าอยากจะแก้ไขอะไรอีกนิดหน่อยใน benchmarks.rb ก่อนที่จะบันทึกการเปลี่ยนแปลง คุณเปิดไฟล์ขึ้นมาใหม่และแก้ไขมัน จากนั้นคุณพร้อมที่จะบันทึกการเปลี่ยนแปลงแล้ว ไม่ว่าจะอย่างไรก็ตาม ลองรันคำสั่ง `git status` อีกสักที
+ทั้งสองไฟล์ได้เข้า stage แล้ว และกำลังก้าวเข้าสู่ commit ถัดไป ณ จุดนี้ สมมุติว่าคุณเพิ่งนึกขึ้นได้ว่าอยากจะแก้ไขอะไรอีกนิดหน่อยใน benchmarks.rb ก่อนที่จะบันทึกการเปลี่ยนแปลง คุณเปิดไฟล์ขึ้นมาใหม่และแก้ไขมัน จากนั้นคุณพร้อมที่จะบันทึกการเปลี่ยนแปลงแล้ว ไม่ว่าจะอย่างไรก็ตาม ลองรันคำสั่ง `git status` อีกสักที
 
 	$ vim benchmarks.rb
 	$ git status
@@ -153,8 +153,8 @@ untracked โดยปกตินั้นหมายความว่า git
 	#	modified:   benchmarks.rb
 	#
 
-ฮ่วย? benchmarks.rb มันถูกแสดงว่ามีสองสถานะคือ  จบขั้นตอนไปแล้ว และ ยังไม่เริ่มขั้นตอนใหม่
-มันเป็นงี้ได้ไง?  มันกลายเป็นว่า สถานะ git ของไฟล์มันไปเป็นตามที่มันควรเป็นเมื่อคุณใช้คำสั่ง git add ถ้าคุณบันทึกการเปลี่ยนแปลงตอนนี้ เวอร์ชั่นของ benchmarks.rb จะเหมือนเดิมเหมือนเมื่อตอนที่คุณรันคำสั่ง git add ครั้งสุดท้ายเพื่อที่จะเข้าไปสู่การ commit ไม่ใช่เวอร์ชั่นที่คุณเห็นในไดเร็คทอรี่ เมื่อคุณรัน git commit ถ้าคุณแก้ไขไฟล์หลังจากรัน `git add` คุณต้องรัน `git add` อีกครั้ง เพื่อ เริ่มต้นขั้นตอนใหม่ต่อจากเวอร์ชั่นล่าสุดของไฟล์
+ฮ่วย? benchmarks.rb มันถูกแสดงว่ามีสองสถานะคือ  เข้า stage ไปแล้ว และ ยังไม่เริ่ม stage ใหม่
+มันเป็นงี้ได้ไง?  มันกลายเป็นว่า สถานะ git ของไฟล์มันไปเป็นตามที่มันควรเป็นเมื่อคุณใช้คำสั่ง git add ถ้าคุณบันทึกการเปลี่ยนแปลงตอนนี้ เวอร์ชั่นของ benchmarks.rb จะเหมือนเดิมเหมือนเมื่อตอนที่คุณรันคำสั่ง git add ครั้งสุดท้ายเพื่อที่จะเข้าไปสู่การ commit ไม่ใช่เวอร์ชั่นที่คุณเห็นในไดเร็คทอรี่ เมื่อคุณรัน git commit ถ้าคุณแก้ไขไฟล์หลังจากรัน `git add` คุณต้องรัน `git add` อีกครั้ง เพื่อ เริ่มต้น stage ใหม่ต่อจากเวอร์ชั่นล่าสุดของไฟล์
 
 	$ git add benchmarks.rb
 	$ git status
@@ -206,11 +206,11 @@ untracked โดยปกตินั้นหมายความว่า git
 	doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
 
 
-### การดูของที่ จบขั้นตอนแล้ว และ ยังไม่เข้าขั้นตอน การแก้ไข ###
+### การดูของที่ เข้า stage แล้ว และ ยังไม่เข้า stage ###
 
 ถ้าคำสั่ง `git status` มันดูไม่ค่อยเข้าใจสำหรับคุณ คุณต้องรู้ให้ได้จริงๆว่าคุณแก้ไขอะไรลงไป ไม่ใช่แค่รู้ว่าไฟล์ไหนถูกแก้ไขเท่านั้น
 คุณลองใช้คำสั่ง `git diff` ซึ่งเดี๋ยวเราจะไปดูกันในรายละเอียดภายหลัง แต่คุณจะต้องใช้มันบ่อยมากๆเพื่อตอบสองคำถามนี้
-อะไรที่คุณแก้ไขไปแล้วยังไม่เข้า stage และ อะไรที่คุณจบ stage แล้วนั้นมันเกี่ยวกับ commit หรือเปล่า
+อะไรที่คุณแก้ไขไปแล้วยังไม่เข้า stage และ อะไรที่คุณเข้า stage แล้วนั้นมันเกี่ยวกับ commit หรือเปล่า
 แม้ว่า `git status` จะตอบคำถามพวกนี้ได้แบบกว้างๆ แค่คำสั่ง  `git diff` จะแสดงให้คุณเห็นจริงๆว่าบรรทัดไหนถูกเพิ่ม บรรทัดไหนถูกลบ การแก้ไขทั้งหมดอย่างที่มันเป็นจริงๆ
 
 ยกตัวอย่างเช่น คุณแก้ไข และเข้า stage ให้ไฟล์ README อีกครั้ง จากนั้นคุณก็ไปแก้ไขไฟล์ benchmarks.rb โดยไม่เอาเข้า stage
@@ -252,8 +252,8 @@ untracked โดยปกตินั้นหมายความว่า git
 คำสั่งนั้นจะเปรียบเทียบว่าอะไรในไดเร็คทอรี่งานของคุณต่างกับสิ่งที่คุณเอาเข้า stage แล้ว
 ผลลัพธ์นี้จะบอกคุณว่าคุณแก้ไขอะไรไปแล้วยังไม่เข้า stage
 
-ถ้าคุณอยากจะเห็นว่าอะไรที่จบ stage ไปแล้ว และกำลังจะไปสู่ commit ต่อไป คุณสามารถใช้คำสั่ง `git diff --cached`
-(ใน git เวอร์ชั่น 1.6.1 และหลังจากนั้น คุณสามารถใช้คำสั่ง `git diff --staged` ได้ด้วย ซึ่งง่ายที่จะจำมากกว่า) คำสั่งนี้จะเปรียบเทียบของที่จบ stage ไปแล้วกับ commit สุดท้ายให้
+ถ้าคุณอยากจะเห็นว่าอะไรที่เข้า stage ไปแล้ว แตกต่างไปจาก สิ่งที่กำลังจะไปสู่ commit ต่อไป(ไฟลฺ์ที่ add แล้ว) คุณสามารถใช้คำสั่ง `git diff --cached`
+(ใน git เวอร์ชั่น 1.6.1 และหลังจากนั้น คุณสามารถใช้คำสั่ง `git diff --staged` ได้ด้วย ซึ่งง่ายที่จะจำมากกว่า) คำสั่งนี้จะเปรียบเทียบของที่เข้า stage ไปแล้วกับ commit สุดท้ายให้
 
 	$ git diff --cached
 	diff --git a/README b/README
@@ -269,9 +269,9 @@ untracked โดยปกตินั้นหมายความว่า git
 	+Grit is a Ruby library for extracting information from a Git repository
 
 ข้อสำคัญที่ควรจำคือ `git diff` นั้นไม่ได้แสดงการแก้ไขทั้งหมดที่เกิดหลังการ commit ครั้งล่าสุด แต่จะแสดงเฉพาะการแก้ไขที่ยังไม่เข้า stage
-สิ่งนี้อาจจะทำให้สับสน เพราะถ้าคุณได้จบ stage ของการแก้ไขทั้งหมดแล้ว `git diff`จะไม่ให้ผลลัพธ์อะไรกับคุณเลย
+สิ่งนี้อาจจะทำให้สับสน เพราะถ้าคุณได้เข้า stage ของการแก้ไขทั้งหมดแล้ว `git diff`จะไม่ให้ผลลัพธ์อะไรกับคุณเลย
 
-สำหรับตัวอย่างอื่นๆ ถ้าคุณสนใจไฟล์  benchmarks.r และแก้ไขมัน คุณสามารถใช้  `git diff` เพื่อดูการแก้ไขในไฟล์ที่จบ stage แล้วที่ทำให้มันกลายเป็น ยังไม่เข้า stage
+สำหรับตัวอย่างอื่นๆ ถ้าคุณสนใจไฟล์  benchmarks.r และแก้ไขมัน คุณสามารถใช้  `git diff` เพื่อดูการแก้ไขในไฟล์ที่เข้า stage แล้วที่ทำให้มันกลายเป็น ยังไม่เข้า stage
 
 	$ git add benchmarks.rb
 	$ echo '# test line' >> benchmarks.rb
@@ -300,7 +300,7 @@ untracked โดยปกตินั้นหมายความว่า git
 	 ##pp Grit::GitRuby.cache_client.stats
 	+# test line
 
-และคำสั่ง `git diff --cached` เพื่อดูว่าอะไรเปลี่ยนไปจนกระทั่งจบ stage
+และคำสั่ง `git diff --cached` เพื่อดูว่าอะไรเปลี่ยนไปจนกระทั่งเข้า stage
 
 	$ git diff --cached
 	diff --git a/benchmarks.rb b/benchmarks.rb
@@ -319,33 +319,35 @@ untracked โดยปกตินั้นหมายความว่า git
 	          log = git.commits('master', 15)
 	          log.size
 
-### Committing Your Changes ###
 
-Now that your staging area is set up the way you want it, you can commit your changes. Remember that anything that is still unstaged — any files you have created or modified that you haven’t run `git add` on since you edited them — won’t go into this commit. They will stay as modified files on your disk.
-In this case, the last time you ran `git status`, you saw that everything was staged, so you’re ready to commit your changes. The simplest way to commit is to type `git commit`:
+### การ commit สิ่งที่เปลี่ยนไป ###
 
-	$ git commit
+ตอนนี้ พื้นที่ของ staging ของคุณสร้างขึ้นในแบบที่คุณต้องการ หากคุณต้องการ commit การเปลี่ยนแปลง จำไว้ว่าอะไรก็ตามที่ยังไม่เข้า stage คือไฟล์ที่ถูกสร้างขึ้นใหม่ หรือถูกแก้ไขโดยที่ยังไม่ได้รัน `git add` เลยตั้งแต่ถูกแก้ไข มันจะไม่ไปสู่การ commit และยังคงเป็นแค่ไฟล์ที่ถูกแก้ไขในดิสต์ของคุณเอง
+ในกรณีนี้ เมื่อครั้งสุดท้ายที่คุณรันคำสั่ง  `git status` คุณได้เห็นทุกอย่างเข้า stage แล้ว แล้วคุณก็ยัง commit การเปลี่ยนแปลงแล้วด้วย  ทางที่ง่ายที่สุดที่จะ commit คือพิมพ์ว่า  `git commit`
 
-Doing so launches your editor of choice. (This is set by your shell’s `$EDITOR` environment variable — usually vim or emacs, although you can configure it with whatever you want using the `git config --global core.editor` command as you saw in Chapter 1).
+$ git commit
 
-The editor displays the following text (this example is a Vim screen):
+การทำแบบนี้จะทำให้เปิด editor ขึ้นมา (ซึ่งถูกเซ็ตไว้ในตัวแปร $EDITOR ใน เชลล์ ซึ่งโดยปกติจะเป็น vim หรือ emacs  อย่างไรก็ตามคุณสามารถคอนฟิกมันตามต้องการได้โดยใช้คำสั่ง `git config --global core.editor` ดังที่คุณเห็นมาแล้วในบทที่ 1)
 
-	# Please enter the commit message for your changes. Lines starting
-	# with '#' will be ignored, and an empty message aborts the commit.
-	# On branch master
-	# Changes to be committed:
-	#   (use "git reset HEAD <file>..." to unstage)
-	#
-	#       new file:   README
-	#       modified:   benchmarks.rb
-	~
-	~
-	~
-	".git/COMMIT_EDITMSG" 10L, 283C
+editor จะแสดงข้อความตามนี้ (ตัวอย่างนี้เป็นหน้าจอของ vim)
 
-You can see that the default commit message contains the latest output of the `git status` command commented out and one empty line on top. You can remove these comments and type your commit message, or you can leave them there to help you remember what you’re committing. (For an even more explicit reminder of what you’ve modified, you can pass the `-v` option to `git commit`. Doing so also puts the diff of your change in the editor so you can see exactly what you did.) When you exit the editor, Git creates your commit with that commit message (with the comments and diff stripped out).
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       new file:   README
+#       modified:   benchmarks.rb
+~
+~
+~
+".git/COMMIT_EDITMSG" 10L, 283C
 
-Alternatively, you can type your commit message inline with the `commit` command by specifying it after a -m flag, like this:
+คุณจะเห็นข้อความมาตรฐานในผลลัพธ์ล่าสุดของคำสั่ง `git status`  คำแนะนำ และบรรทัดว่างๆที่บนสุด
+คุณสามารถลบข้อความเหล่านั้นและพิมพ์ข้อความที่ต้องการ commit ลงไป หรือคุณจะปล่อยมันไว้เพื่อเตือนความจำว่าคุณควรทำอะไรเมื่อคุณกำลัง commit (เพื่อย้ำเตือนเวลาที่คุณแก้ไขอะไรลงไป และคุณยังสามารถใส่ค่า  `-v` ลงไปในคำสั่ง `git commit` จะทำให้มันใส่การเปลี่ยนแปลงต่างๆเหมือน git diff ลงไปใน editor ให้คุณเห็นเลยว่าจริงๆคุณทำอะไรไว้บ้าง) เมื่อคุณออกจาก editor git จะสร้าง commit พร้อม ข้อความในนั้น (พร้อมข้อความอื่นๆ และเอาสิ่งที่เปลี่ยนแปลงออกไป)
+
+หรืออีกวิธีหนึ่ง คุณสามารถพิมพ์ข้อความสำหรับ commit ลงไปในบรรทัดของคำสั่ง  `commit` ด้วยการใส่ -m ตามหลังแบบนี้
 
 	$ git commit -m "Story 182: Fix benchmarks for speed"
 	[master]: created 463dc4f: "Fix benchmarks for speed"
