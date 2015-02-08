@@ -12,15 +12,6 @@
 คุณสามารถเริ่มมีโปรเจ็คใน Git ได้สองวิธีหลักๆคือ วิธีแรก เอาโปรเจ็คที่มีอยู่แล้ว หรือ directory ก็ได้ มา import เข้าไปใน Git
 วิธีที่สองคือ clone  มาจาก repository ที่มีอยู่จาก server ใด้สักแห่ง
 
-If you’re starting to track an existing project in Git, you need to go to the project’s directory and type
-
-	$ git init
-
-This creates a new subdirectory named .git that contains all of your necessary repository files — a Git repository skeleton. At this point, nothing in your project is tracked yet. (See Chapter 9 for more information about exactly what files are contained in the `.git` directory you just created.)
-
-If you want to start version-controlling existing files (as opposed to an empty directory), you should probably begin tracking those files and do an initial commit. You can accomplish that with a few git add commands that specify the files you want to track, followed by a commit:
-
-
 ## การสร้างเรโปจากไดเร็คทอรี่เดิม ##
 ถ้าคุณกำลังจะเริ่ม track โปรเจ็คเดิมใน git คุณต้องไปที่ directory ของโปรเจ็คนั้น และพิมพ์คำสั่ง
 
@@ -57,13 +48,6 @@ $ git init
 
 Git มีหลายโปรโตคอลสำหรับถ่ายโอนไฟล์ให้เลือกใช้ โดยตัวอย่างก่อนหน้านี้ได้ใช้ โปรโตคอล `git://` แต่คุณอาจจะได้เห็นแบบอื่นด้วยเช่น `http(s)://` หรือ `user@server:/path.git` ซึ่งใช้โปรโตคอล SSH โดยในบทที่ 4 จะแนะนำตัวเลือกทั้งหมดที่เป็นไปได้ที่เซิฟเวอร์จะตั้งค่าให้เข้าถึง Git repository ได้ รวมถึงข้อดีข้อเสียของแต่ละตัวเลือก
 
-
-
-
-As you edit files, Git sees them as modified, because you’ve changed them since your last commit. You stage these modified files and then commit all your staged changes, and the cycle repeats. This lifecycle is illustrated in Figure 2-1.
-
-Insert 18333fig0201.png
-Figure 2-1. The lifecycle of the status of your files.
 
 ## การบันทึกการเปลี่ยนแปลงใน repository ##
 คุณมีสักหนึ่ง repository ใสๆและเช็คเอ้าท์หรือทำสำเนาไฟล์งานของโปรเจ็คนั้นไว้ ทีนี้คุณต้องการแก้ไขออะไรสักอย่างและ อยาก commit ภาพรวมการเปลี่ยนแปลงนั้นเข้าไปใน repository ทีละขั้นทีละตอน
@@ -152,9 +136,6 @@ untracked โดยปกตินั้นหมายความว่า git
 	#	modified:   benchmarks.rb
 	#
 
-	Both files are staged and will go into your next commit. At this point, suppose you remember one little change that you want to make in benchmarks.rb before you commit it. You open it again and make that change, and you’re ready to commit. However, let’s run `git status` one more time:
-
-
 ทั้งสองไฟล์ได้จบขั้นตอนแล้ว และกำลังก้าวเข้าสู่ commit ถัดไป ณ จุดนี้ สมมุติว่าคุณเพิ่งนึกขึ้นได้ว่าอยากจะแก้ไขอะไรอีกนิดหน่อยใน benchmarks.rb ก่อนที่จะบันทึกการเปลี่ยนแปลง คุณเปิดไฟล์ขึ้นมาใหม่และแก้ไขมัน จากนั้นคุณพร้อมที่จะบันทึกการเปลี่ยนแปลงแล้ว ไม่ว่าจะอย่างไรก็ตาม ลองรันคำสั่ง `git status` อีกสักที
 
 	$ vim benchmarks.rb
@@ -186,26 +167,36 @@ untracked โดยปกตินั้นหมายความว่า git
 	#
 
 
-### Ignoring Files ###
-
-Often, you’ll have a class of files that you don’t want Git to automatically add or even show you as being untracked. These are generally automatically generated files such as log files or files produced by your build system. In such cases, you can create a file listing patterns to match them named .gitignore.  Here is an example .gitignore file:
+### การละเว้นไฟล์ใดๆ ###
+บ่อยครั้ง คุณอาจจะมีคลาสหรือไฟล์ที่คุณไม่อยากให้ git เพิ่มให้โดยอัตโนมัติ หรือ ไม่อยากให้โชว์เป็น untracked
+ซึ่งโดยปกติจะเป็นไฟล์ที่ถูกสร้างขั้นมาเองเช่น log ไฟล์ หรือไฟล์ที่ถูกสร้างโดยระบบ
+ในกรณีนี้ คุณสามารถสร้างไฟล์สำหรับใส่รูปแบบไฟล์พวกนี้ไว้ใน .gitignore
+นี่คือตัวอย่างไฟล์ .gitignore
 
 	$ cat .gitignore
 	*.[oa]
 	*~
 
-The first line tells Git to ignore any files ending in .o or .a — object and archive files that may be the product of building your code. The second line tells Git to ignore all files that end with a tilde (`~`), which is used by many text editors such as Emacs to mark temporary files. You may also include a log, tmp, or pid directory; automatically generated documentation; and so on. Setting up a .gitignore file before you get going is generally a good idea so you don’t accidentally commit files that you really don’t want in your Git repository.
+ในบรรทัดแรก คือการบอกให้ git ละเว้นไฟล์ใดๆก็ตามที่ลงท้ายด้วย .o หรือ .a
+ซึ่งอาจจะเป็น ออปเจ็ค และ archive file ที่เกิดจากการที่คุณ building โค้ดของคุณ
+บรรทัดที่สอง คือการบอกให้ git ละเว้นทุกไฟล์ที่ลงท้ายด้วยสัญลักษณ์ (`~`)
+ซึ่งมันถูกใช้จากหลายๆ text editor เช่น Emacs เพื่อสร้าง temporary files
+คุณอาจจะเพิ่ม log หรือ tmp หรือ pid เข้าไปด้วย รวมทั้งพวกเอกสารที่ถูกสร้างขึ้นมาเองทั้งหลาย
+ดังนั้น จงทำ .gitignore ขั้นมาก่อนที่คุณจะไปมีไอเดียบรรเจิด เพื่อที่คุณจะไม่ต้องเจอเหตุไม่คาดฝัน
+เวลา commit ไฟล์ที่จะไม่ต้องการมันจริงๆใน repository ของคุณ
 
-The rules for the patterns you can put in the .gitignore file are as follows:
+กฎของรูปแบบต่างๆที่คุณจะใส่ลงไปใน .gitignore ได้มีดังนี้
 
-*	Blank lines or lines starting with # are ignored.
-*	Standard glob patterns work.
-*	You can end patterns with a forward slash (`/`) to specify a directory.
-*	You can negate a pattern by starting it with an exclamation point (`!`).
+* บรรทัดที่ว่าง หรือบรรทัดที่เริ่มต้นด้วย # จะถูกละเว้นไปเลย
+* รูปแบบสากลนั้นใช้ได้
+* คุณสามารถจบรูปแบบด้วย ('/') สำหรับเจาะจงไปที่ไดเร็คทอรี่
+* สามารถใช้ การปฏิเสธรูปแบบด้วยการเริ่มต้นด้วยเครื่องหมาย ('!')
 
-Glob patterns are like simplified regular expressions that shells use. An asterisk (`*`) matches zero or more characters; `[abc]` matches any character inside the brackets (in this case a, b, or c); a question mark (`?`) matches a single character; and brackets enclosing characters separated by a hyphen(`[0-9]`) matches any character between them (in this case 0 through 9) .
+รูปแบบสากลก็คล้ายๆ regular ecpressions ที่เชลล์ใช้นั่นแหล่ะ เช่น สัญลักษณ์ (`*`) ตรงกับอักษร ศูนย์ตัว หรือมากกว่านั้น
+`[abc]` ตรงกับอักษรใดๆภายในเครื่องหมายก้ามปู (ในที่นี้คือ a, b หรือ c)  เครื่องหมายคำถาม (`?`)  ตรงกับอักษรใดๆหนึ่งตัว
+และเครื่องหมายก้ามปูครอบไว้ด้วยอักษรที่มี เครื่องหมายลบคั่นกลาง (`[0-9]`)  ตรงกับอักษรใดๆระหว่างนั้น (ในที่นี้คือ 0 ถึง 9)
 
-Here is another example .gitignore file:
+ต่อไปนี้คืออีกตัวอย่างของไฟล์ .gitignore
 
 	# a comment - this is ignored
 	*.a       # no .a files
